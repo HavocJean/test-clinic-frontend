@@ -31,20 +31,15 @@ export class LoginComponent {
     this.isSubmit = true;
   
     if (this.loginForm.invalid) {
-      console.log('Formulário inválido!', this.loginForm.errors, this.formControls['password'].errors);
       return;
     }
   
-    console.log('Enviando credenciais...', this.loginForm.value);
-  
     this.authService.login(this.loginForm.value).subscribe({
       next: (data) => {
-        console.log('Login realizado', data);
-        this.authService.setToken(data.token);
-        this.router.navigate(['home']);
+        this.authService.setToken(data.access_token);
+        this.router.navigate(['history']);
       },
       error: (err) => {
-        console.log(err);
         this.errorMessage = 'E-mail ou senha inválidos';
       }
     });
