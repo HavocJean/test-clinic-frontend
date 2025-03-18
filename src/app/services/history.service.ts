@@ -21,8 +21,6 @@ export class HistoryService {
 
     const result = this.http.get(`${this.apiUrl}?search=${search}&page=${page}`, {headers});
 
-    console.log(result);
-
     return result;
   }
 }

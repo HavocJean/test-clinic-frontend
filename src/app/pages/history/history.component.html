@@ -1,0 +1,64 @@
+<section class="container mt-5">
+    <h2>Histórico de Usuário</h2>
+  
+    <div class="mb-3">
+        <input type="text" [(ngModel)]="searchQuery" class="form-control" placeholder="Buscar..." (keyup.enter)="search()" />
+    </div>
+  
+    <div *ngIf="isLoading()" class="text-center">
+        <p>Carregando...</p>
+    </div>
+  
+    <div *ngIf="!isLoading() && historyList().length == 0" class="alert alert-warning">
+        Nenhum registro encontrado.
+    </div>
+  
+    <table *ngIf="historyList().length > 0" class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Razão social</th>
+                <th>Nome Fantasia</th>
+                <th>Regional</th>
+                <th>Status</th>
+                <th>Especialidade</th>
+                <!-- <th>Ações</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let record of historyList()">
+                <td>{{ record.corporate_name }}</td>
+                <td>{{ record.trade_name }}</td>
+                <td>{{ record.regional.name }}</td>
+                <td>{{ record.status ? 'Ativo' : 'Inativo' }}</td>
+                <td>{{ getSpecialtiesNames(record) }}</td>
+                <!-- <td>
+                    <button class="btn btn-info btn-sm me-2" (click)="viewRecord(record.id)">Visualizar</button>
+                    <button class="btn btn-warning btn-sm" (click)="editRecord(record.id)">Editar</button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="navigation" *ngIf="totalPages() > 1">
+        <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage() === 1">
+                <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(currentPage() - 1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+            </li>
+    
+            <li class="page-item" *ngFor="let page of getPagesArray(); let i = index" 
+                [class.active]="currentPage() === page">
+                <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(page)">{{ page }}</a>
+            </li>
+    
+            <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+                <a class="page-link" href="#" (click)="$event.preventDefault(); changePage(currentPage() + 1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Próximo</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</section>  
