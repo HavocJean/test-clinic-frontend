@@ -11,9 +11,11 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
 export class LoginComponent {
   loginForm: FormGroup;
   isSubmit = false;
+  isLoading = false;
   errorMessage = '';
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
@@ -29,19 +31,29 @@ export class LoginComponent {
 
   onSubmit() {
     this.isSubmit = true;
+    this.errorMessage = '';
   
     if (this.loginForm.invalid) {
       return;
     }
+
+    this.isLoading = true;
   
     this.authService.login(this.loginForm.value).subscribe({
       next: (data) => {
-        this.authService.setToken(data.access_token);
+        this.isLoading = false;
+        this.authService.setToken(data.access_token, data.expires_in);
         this.router.navigate(['history']);
       },
       error: (err) => {
+        this.isLoading = false;
         this.errorMessage = 'E-mail ou senha inválidos';
       }
     });
+  }
+
+  clearError() {
+    this.errorMessage = '';
+    this.isSubmit = false;
   }
 }
