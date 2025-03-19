@@ -1,11 +1,36 @@
-.container {
-    max-width: 900px;
+main {
+    margin-top: 80px;
 }
-  
-.table {
-    margin-top: 20px;
+
+.table-bordered th, .table-bordered td {
+    border-color: #ddd;
 }
-  
-.pagination {
-    margin-top: 20px;
+
+.table tbody tr td button {
+    margin-right: 5px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #aad3ff;
+    border-color: #007bff;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    border-radius: 5px;
+    margin: 0 3px;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #ccc;
+}
+
+.btn-info, .btn-danger {
+    color: white;
+    border-radius: 5px;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
 }
