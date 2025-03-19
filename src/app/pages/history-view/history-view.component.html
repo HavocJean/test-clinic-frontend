@@ -1,0 +1,56 @@
+<section class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="mb-4 text-center">Detalhes do Histórico do Usuário</h2>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Razão Social:</label>
+                <p class="form-control-plaintext">{{ history.corporate_name }}</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Nome Fantasia:</label>
+                <p class="form-control-plaintext">{{ history.trade_name }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">CNPJ:</label>
+                <p class="form-control-plaintext">{{ history.cnpj }}</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Regional:</label>
+                <p class="form-control-plaintext">{{ history.regional.name }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Data de Inauguração:</label>
+                <p class="form-control-plaintext">{{ history.start_date | date:'dd/MM/yyyy' }}</p>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Status:</label>
+                <p class="form-control-plaintext">
+                    {{ history.status ? 'Ativo' : 'Inativo' }}
+                </p>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold">Especialidades:</label>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let specialty of history.specialties">
+                    {{ specialty.name }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-secondary" (click)="closeView()">Fechar</button>
+        </div>
+    </div>
+</section>
