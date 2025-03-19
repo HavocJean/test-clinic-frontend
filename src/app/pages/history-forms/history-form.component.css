@@ -1,0 +1,41 @@
+.container {
+    max-width: 600px;
+}
+  
+.invalid-feedback {
+    display: block;
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+}
+.card {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background: #f8f9fa;
+}
+
+.card h2 {
+    color: #343a40;
+}
+.form-control,
+.form-select {
+    border-radius: 5px;
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+footer {
+    background: #343a40;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
