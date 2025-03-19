@@ -8,19 +8,50 @@ import { AuthService } from './auth.service';
 })
 export class HistoryService {
 
-  private apiUrl = 'http://localhost:8000/api/user/history';
+  private apiUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getUserHistory(search: string = '', page: number = 1): Observable<any> {
+  private getAuthHeader(): HttpHeaders {
     const token = this.authService.getToken();
 
-    const headers = new HttpHeaders({
+    return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
+  }
 
-    const result = this.http.get(`${this.apiUrl}?search=${search}&page=${page}`, {headers});
+  getHistory(search: string = '', page: number = 1): Observable<any> {
+    const headers = this.getAuthHeader();
+    return this.http.get(`${this.apiUrl}/user/history?search=${search}&page=${page}`, {headers});
+  }
 
-    return result;
+  getById(id: number): Observable<any> {
+    const headers = this.getAuthHeader();
+    return this.http.get<any>(`${this.apiUrl}/user/history/${id}`, {headers});
+  }
+
+  create(data: any): Observable<any> {
+    const headers = this.getAuthHeader();
+    return this.http.post<any>(`${this.apiUrl}/user/history`, data, {headers});
+  }
+
+  update(id: number, data: any): Observable<any> {
+    const headers = this.getAuthHeader();
+    return this.http.put<any>(`${this.apiUrl}/user/history/${id}`, data, {headers});
+  }
+
+  // delete(id: number): Observable<any> {
+  //   const headers = this.getAuthHeader();
+  //   return this.http.delete<any>(`${this.apiUrl}/user/history${id}`, {headers});
+  // }
+
+  getRegionals(): Observable<any[]> {
+    const headers = this.getAuthHeader();
+    return this.http.get<any[]>(`${this.apiUrl}/regionals`, {headers});
+  }
+
+  getSpecialties(): Observable<any[]> {
+    const headers = this.getAuthHeader();
+    return this.http.get<any[]>(`${this.apiUrl}/specialties`, {headers});
   }
 }

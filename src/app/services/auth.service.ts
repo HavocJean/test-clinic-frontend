@@ -11,15 +11,24 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: { email: string; password: string }): Observable<any> {
-    console.log('start login');
     return this.http.post(this.apiUrl, credentials);
   }
 
-  setToken(token: string): void {
+  setToken(token: string, expiresIn: number): void {
     sessionStorage.setItem('authToken', token);
+
+    const expirationTime = new Date().getTime() + expiresIn * 1000;
+    sessionStorage.setItem('tokenExpiration', expirationTime.toString());
   }
 
   getToken(): string | null {
+    const expirationTime = sessionStorage.getItem('tokenExpiration');
+
+    if (expirationTime && new Date().getTime() > parseInt(expirationTime)) {
+      this.logout();
+      return null;
+    }
+
     return sessionStorage.getItem('authToken');
   }
 
@@ -29,5 +38,6 @@ export class AuthService {
 
   logout(): void {
     sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('tokenExpiration');
   }
 }
