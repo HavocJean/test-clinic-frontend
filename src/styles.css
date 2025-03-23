@@ -2,3 +2,7 @@
 body {
     background-color: #f2f5f3;
 }
+
+main {
+    min-height: 82vh !important;
+}
